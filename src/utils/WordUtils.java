@@ -27,32 +27,31 @@ public class WordUtils {
         Set<String> uniqueWords = new HashSet<>();
 
         for (int i = 3; i <= letters.length(); i++) {
+
+            // iter uses combinations to generate every arrangement of the letters
             Iterator<int[]> iter = CombinatoricsUtils.combinationsIterator(letters.length(), i);
             while (iter.hasNext()) {
                 int[] indices = iter.next();
                 StringBuilder combination = new StringBuilder();
                 boolean hasVowel = false;
 
-                // Build the combination string
                 for (int index : indices) {
                     char letter = letters.charAt(index);
                     combination.append(letter);
-                    if (vowels.contains(letter)) {
-                        hasVowel = true;
-                    }
+                    if (vowels.contains(letter)) hasVowel = true;
                 }
 
-                // Skip if no vowels or 'y'
+                // it's probably not a word if there are no vowels/y
                 if (!hasVowel) continue;
 
                 String combinationStr = combination.toString();
 
-                // Skip if the combination is already processed (i.e., exists in the set)
+                // prevents creating the same word with different letters
                 if (uniqueWords.contains(combinationStr)) continue;
 
-                // Check if the word exists in the dictionary
+                // Checks against dictionary
                 if (dictionary.isAWord(combinationStr)) {
-                    uniqueWords.add(combinationStr);  // Add to the set to prevent reprocessing
+                    uniqueWords.add(combinationStr);
                 }
             }
         }

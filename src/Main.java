@@ -1,39 +1,44 @@
-import dictionary.Dictionary;
 import java.util.*;
 
-import static utils.WordUtils.getSubWordCount;
-import static utils.WordUtils.printSubWords;
+import static problems.IBeforeEExceptAfterC.getViolatingRules;
+import static problems.ValidWordPermutations.getValidWords;
 
 public class Main {
     public static void main(String[] args) {
-        Iterator<String> words = Dictionary.getInstance().getIterableDictionary();
-
-        Map<Integer, Set<String>> subWordCounter = new HashMap<>();
-
-        int i = 0, max = 0;
-        while (words.hasNext()){
-
-            String word = words.next();
-
-            if(word.length() < 4) continue;
-            int subCount = getSubWordCount(word);
-
-            if(max < subCount) {
-                max = subCount;
-                System.out.println("Current max: " + max);
-                System.out.println("Searches :" + i);
-                System.out.println("Word: " + word);
-            }
-
-            subWordCounter.computeIfAbsent(subCount, k -> new HashSet<>());
-            subWordCounter.get(subCount).add(word);
-
-            ++i;
+        if (args.length == 0) {
+            System.out.println("""
+                    Please provide an argument: \
+                    
+                      - 'subwords': See how many words can be formed using the letters of each word\
+                    
+                      - 'violations': See which word violated 'i' before 'e' except after 'c'""");
+            return;
         }
 
-        for(int idx: subWordCounter.keySet()){
-            System.out.println(idx + ", " + subWordCounter.get(idx));
+        switch (args[0].toLowerCase()) {
+            case "subwords":
+                printValidPermutations();
+                break;
+            case "violations":
+                printViolations();
+                break;
+            default:
+                System.out.println("Invalid argument. Use 'valid' to print valid permutations or 'violations' to print violations.");
         }
     }
 
+    private static void printValidPermutations(){
+        Map<Integer, Set<String>> subWordCounter = getValidWords();
+
+        for(int i: subWordCounter.keySet()){
+            System.out.println(i + ", " + subWordCounter.get(i));
+        }
+    }
+
+    private static void printViolations(){
+        Set<String> violatingRules = getViolatingRules();
+        for(String s: violatingRules){
+            System.out.println(s);
+        }
+    }
 }
