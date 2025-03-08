@@ -1,6 +1,5 @@
 package dictionary;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,21 +15,27 @@ import java.util.stream.Stream;
 public class Dictionary {
 
     private static Dictionary dictionaryClass;
-    private final Set<String> dictionary;
+    private Set<String> dictionary;
+    private DictionarySource dictionarySource = DictionarySource.SCRABBLE;
 
-    private Dictionary() throws IOException {
-        try (Stream<String> lines = Files.lines(Paths.get("./src/dictionary/resources/dictionary.txt"))) {
+    private Dictionary() {
+       readDictionary();
+    }
+
+    private void readDictionary(){
+        try (Stream<String> lines = Files.lines(Paths.get("./src/dictionary/resources/" + dictionarySource.getFileName()))) {
             dictionary = lines.collect(Collectors.toSet());
-        }
+        } catch (IOException ignored){}
+    }
+
+    public void switchDictionarySource(DictionarySource dsrc)  {
+        dictionarySource = dsrc;
+        dictionaryClass.readDictionary();
     }
 
     public static synchronized Dictionary getInstance(){
         if(dictionaryClass == null){
-            try {
-                dictionaryClass = new Dictionary();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            dictionaryClass = new Dictionary();
         }
         return dictionaryClass;
     }
