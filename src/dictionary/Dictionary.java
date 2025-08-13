@@ -16,7 +16,7 @@ public class Dictionary {
 
     private static Dictionary dictionaryClass;
     private Set<String> dictionary;
-    private DictionarySource dictionarySource = DictionarySource.INFOCHIMPS_ALL; //Can change
+    private DictionarySource dictionarySource = DictionarySource.SCRABBLE; //Can change
 
     private Dictionary() {
        readDictionary();
