@@ -25,4 +25,11 @@ public class ValidWordPermutations {
 
         return subWordCounter;
     }
+
+    public static void printValidPermutations(){
+        Map<Integer, Set<String>> subWordCounter = getValidWords();
+        for(int i: subWordCounter.keySet()){
+            System.out.println(i + ", " + subWordCounter.get(i));
+        }
+    }
 }

@@ -20,4 +20,11 @@ public class IBeforeEExceptAfterC {
         }
         return words;
     }
+
+    public static void printViolations(){
+        Set<String> violatingRules = getViolatingRules();
+        for(String s: violatingRules){
+            System.out.println(s);
+        }
+    }
 }
