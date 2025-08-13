@@ -4,6 +4,8 @@ import static problems.IBeforeEExceptAfterC.printViolations;
 import static problems.ValidWordPermutations.printValidPermutations;
 import static utils.Constants.*;
 import static utils.WordUtils.printSubWords;
+import static utils.PerformanceTester.runQuickPerformanceTest;
+import static utils.PerformanceTester.runLongPerformanceTest;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +21,8 @@ public class Main {
         switch (args[0].toLowerCase()) {
             case "subwords" -> handleSubwords(args);
             case "violations" -> printViolations();
+            case "perftest" -> runQuickPerformanceTest();
+            case "longperf" -> runLongPerformanceTest();
             default -> System.out.println(INVALID_ARGUMENT_MESSAGE);
         }
     }

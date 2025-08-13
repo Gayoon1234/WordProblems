@@ -7,7 +7,7 @@ import java.util.*;
 
 public class WordUtils {
     private static final Dictionary DICTIONARY = Dictionary.getInstance();
-    private static final Set<Character> VOWELS = Set.of('A', 'E', 'I', 'O', 'U', 'Y');
+    private static final Set<Character> VOWELS = Set.of('a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y');
     private static final int MIN_WORD_LENGTH = 3;
     private static final int MAX_WORD_LENGTH_FOR_COMBINATIONS = 15; // Avoid exponential explosion
     
@@ -98,7 +98,7 @@ public class WordUtils {
         return Math.max(estimatedCount, 10); // Minimum reasonable estimate
     }
 
-    private static Set<String> generateSubWords(String word) {
+    public static Set<String> generateSubWords(String word) {
         if (word.length() < MIN_WORD_LENGTH) return new HashSet<>();
         
         Set<String> uniqueWords = new HashSet<>();
